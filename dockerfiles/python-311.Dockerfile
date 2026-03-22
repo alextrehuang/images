@@ -1,7 +1,5 @@
-# dockerfiles/base-python.Dockerfile
-
-# Use official Python 3.11 slim (Debian trixie, multi-arch, works on ARM64)
-FROM python:3.12-slim AS runtime
+# python-311-m4.Dockerfile
+FROM python:3.11-slim
 
 # Environment
 ENV PYTHONDONTWRITEBYTECODE=1
@@ -10,7 +8,7 @@ ENV http_proxy=""
 ENV https_proxy=""
 ENV no_proxy="127.0.0.1,localhost"
 
-# Use HTTPS Debian mirrors that match python:3.11-slim's Debian 13 (trixie) base
+# Use HTTPS Debian repos that match python:3.11-slim's Debian 13 (trixie) base
 RUN rm -f /etc/apt/sources.list /etc/apt/sources.list.d/* \
  && echo "deb https://deb.debian.org/debian trixie main contrib non-free" > /etc/apt/sources.list \
  && echo "deb https://deb.debian.org/debian trixie-updates main contrib non-free" >> /etc/apt/sources.list \
@@ -21,7 +19,6 @@ RUN rm -f /etc/apt/sources.list /etc/apt/sources.list.d/* \
       build-essential \
       curl \
       wget \
-      git \
       libpq-dev \
       libmagic1 \
       procps \
@@ -30,7 +27,6 @@ RUN rm -f /etc/apt/sources.list /etc/apt/sources.list.d/* \
       libffi-dev \
       libssl-dev \
       python3-dev \
-      cargo \
  && rm -rf /var/lib/apt/lists/*
 
 # Upgrade pip, setuptools, wheel
